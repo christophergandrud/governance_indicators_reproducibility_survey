@@ -19,7 +19,7 @@ results <- import('indicators_survey - Sheet1.csv')
 i_names <- unique(results$indicator_name)
 
 # Variables to keep for the heatmap
-keepers <- results[, c(1, 8:ncol(results))]
+keepers <- results[, c(1, 9:ncol(results))]
 notes <- names(keepers)[grepl(pattern = '_note$', x = names(keepers))]
 no_notes <- names(keepers)[!(names(keepers) %in% notes)]
 keepers <- keepers[, no_notes]
@@ -63,4 +63,4 @@ ggplot(keepers_gathered, aes(indicator_name, variable)) +
         axis.text.x = element_text(angle = 315, vjust = 0, hjust = 1)
         )
 
-# Saved as image in RStudio with dimensions 800 x 600
+# Saved as a PNG image in RStudio with dimensions 800 x 600
