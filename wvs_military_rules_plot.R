@@ -4,17 +4,19 @@
 # MIT License
 # ------------------------------------------------------------------------------
 
+# Set working directory, change as needed
+setwd('/git_repositories/governance_indicators_reproducibility_survey/')
+
 # Load required packages
 library(ggplot2)
-library(wesanderson)
 theme_set(theme_bw())
 
-# Enter data from Kurzman 2014 
+# Enter data from Kurzman 2014
 # (https://www.washingtonpost.com/news/monkey-cage/wp/2014/09/02/world-values-lost-in-translation/)
 # as a data frame
 
 main <- data.frame(
-    country = c('Vietnam', 'Vietnam', 
+    country = c('Vietnam', 'Vietnam',
                 'Indonesia', 'Indonesia',
                 'Iran', 'Iran',
                 'Albania', 'Albania'),
@@ -25,14 +27,12 @@ main <- data.frame(
                 83, 13)
 )
 
-# Plot ------
-# Create colour palette
-pal <- wes_palette("Cavalcanti")[c(1:2, 4:5)]
-
 # Produce plot
-ggplot(main, aes(as.factor(year), support, group = country, colour = country)) +
+ggplot(main, aes(as.factor(year), support, group = country,
+                 linetype = country)) +
     geom_line() +
-    scale_colour_manual(values = pal, name = '') +
     scale_y_continuous(limits = c(0, 100)) +
-    xlab('\nWVS Survey Wave') + 
+    xlab('\nWVS Survey Wave') +
     ylab('Affirmative Response to Military Question\n(% of respondents)\n')
+
+ggsave(filename = 'figures/figure_1.eps', width = 9.5, height = 7.2)

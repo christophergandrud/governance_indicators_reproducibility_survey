@@ -39,19 +39,19 @@ keepers_gathered$variable <- clean_labels(keepers_gathered$variable)
 
 # Convert survey result to factor
 keepers_gathered$value[keepers_gathered$value == ''] <- 'N/A'
-keepers_gathered$value <- factor(keepers_gathered$value, 
+keepers_gathered$value <- factor(keepers_gathered$value,
                                  levels = c('yes', 'no', 'N/A'))
-keepers_gathered$variable <- factor(keepers_gathered$variable, 
+keepers_gathered$variable <- factor(keepers_gathered$variable,
                                     levels = no_notes[-1])
-keepers_gathered$indicator_name <- factor(keepers_gathered$indicator_name, 
+keepers_gathered$indicator_name <- factor(keepers_gathered$indicator_name,
                                     levels = i_names)
 
 # Plot heatmap
 ggplot(keepers_gathered, aes(indicator_name, variable)) +
-    geom_tile(aes(fill = value), colour = 'white') + 
+    geom_tile(aes(fill = value), colour = 'white') +
     scale_x_discrete(position = 'top') +
     scale_y_discrete(limits = rev(levels(keepers_gathered$variable))) +
-    scale_fill_manual(values = c('#99d594', '#fc8d59', 'white'), 
+    scale_fill_manual(values = c('#636363', '#bdbdbd', 'white'),
                       name = "Present?") +
     xlab('') + ylab('') +
     theme(
@@ -64,3 +64,4 @@ ggplot(keepers_gathered, aes(indicator_name, variable)) +
         )
 
 # Saved as a PNG image in RStudio with dimensions 800 x 600
+ggsave(filename = 'figures/figure_2.eps', width = 10, height = 9)
