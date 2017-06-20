@@ -9,11 +9,13 @@ setwd('/git_repositories/governance_indicators_reproducibility_survey')
 
 # Load required packages
 library(rio)
+library(dplyr)
 library(tidyr)
 library(ggplot2)
 
 # Load data (originally entered into a Google sheet)
-results <- import('indicators_survey - Sheet1.csv')
+results <- import('indicators_survey - Sheet1.csv') %>%
+                arrange(indicator_name)
 
 # Record order of indicators
 i_names <- unique(results$indicator_name)
@@ -47,10 +49,10 @@ keepers_gathered$indicator_name <- factor(keepers_gathered$indicator_name,
                                     levels = i_names)
 
 # Plot heatmap
-ggplot(keepers_gathered, aes(indicator_name, variable)) +
+ggplot(keepers_gathered, aes(variable, indicator_name)) +
     geom_tile(aes(fill = value), colour = 'white') +
     scale_x_discrete(position = 'top') +
-    scale_y_discrete(limits = rev(levels(keepers_gathered$variable))) +
+    scale_y_discrete(limits = rev(levels(keepers_gathered$indicator_name))) +
     scale_fill_manual(values = c('#636363', '#bdbdbd', 'white'),
                       name = "Present?") +
     xlab('') + ylab('') +
@@ -64,4 +66,4 @@ ggplot(keepers_gathered, aes(indicator_name, variable)) +
         )
 
 # Saved as a PNG image in RStudio with dimensions 800 x 600
-ggsave(filename = 'figures/figure_2.eps', width = 10, height = 9)
+ggsave(filename = 'figures/figure_2.eps', width = 15, height = 10)
