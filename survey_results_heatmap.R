@@ -57,7 +57,6 @@ ggplot(keepers_gathered, aes(variable, indicator_name)) +
                       name = "Present?") +
     xlab('') + ylab('') +
     theme(
-       # legend.position = 'none',
         panel.grid.major.x = element_blank(),
         panel.grid.major.y = element_blank(),
         axis.ticks = element_blank(),
